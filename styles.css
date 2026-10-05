@@ -1,0 +1,130 @@
+/* Custom styles for animations and specific utilities */
+
+@layer utilities {
+    .shadow-soft {
+        box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08);
+    }
+}
+
+/* Animations */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+.animate-float-delayed {
+    animation: float 6s ease-in-out 3s infinite;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+    animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+.animate-fade-in {
+    animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Scroll reveal utility classes */
+.reveal-on-scroll, .reveal-fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll.is-visible, .reveal-fade-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-fade-in {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-fade-in.is-visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.reveal-slide-left {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-slide-left.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.reveal-slide-right {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-slide-right.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Smooth active state on header */
+header.scrolled {
+    background: rgba(253, 251, 247, 0.9);
+    backdrop-filter: blur(12px);
+    height: 5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+.dark header.scrolled {
+    background: rgba(45, 45, 45, 0.9);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+/* FAQ Accordion transition */
+.faq-content {
+    transition: all 0.3s ease-in-out;
+}
+.faq-item.open .faq-btn i {
+    transform: rotate(45deg);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #8DA399;
+    border-radius: 10px;
+}
+.dark ::-webkit-scrollbar-thumb {
+    background-color: #C2A878;
+}
+
+/* Navigation Link Underline Effect */
+.nav-link {
+    position: relative;
+}
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: #C2A878;
+    transition: width 0.3s ease;
+}
+.nav-link:hover::after, .nav-link.active::after {
+    width: 100%;
+}

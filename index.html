@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raw Cat Food Treats | Real Nutrition for Cats</title>
+    <meta name="description"
+        content="Premium, natural, and highly nutritious raw treats for cats. Real nutrition for happier cats.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#F9F6F0',
+                        beige: '#F0E9E1',
+                        charcoal: '#1B2A41',
+                        mutedGreen: '#446A8D',
+                        earthy: '#D96B48',
+                    },
+                    fontFamily: {
+                        heading: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(0,0,0,0.08)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body
+    class="bg-cream dark:bg-charcoal text-charcoal dark:text-cream transition-colors duration-300 font-sans overflow-x-hidden">
+
+    <!-- Toast Notification -->
+    <div id="toast"
+        class="fixed top-24 right-4 z-50 transform translate-x-full opacity-0 transition-all duration-300 bg-earthy text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-3">
+        <i class="bi bi-check-circle-fill"></i>
+        <span id="toastMessage">Added to cart successfully</span>
+    </div>
+
+    <!-- Mini Cart Drawer -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 pointer-events-none">
+        <div class="absolute inset-0 bg-black/20 backdrop-blur-sm opacity-0 transition-opacity duration-300"
+            id="cartOverlay"></div>
+        <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white dark:bg-charcoal shadow-2xl transform translate-x-full transition-transform duration-300 pointer-events-auto flex flex-col"
+            id="cartPanel">
+            <div class="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
+                <h3 class="font-heading text-2xl">Your Cart</h3>
+                <button id="closeCartBtn" class="text-2xl hover:text-earthy transition-colors"><i
+                        class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="flex-1 p-6 flex items-center justify-center text-gray-400">
+                Your cart is empty.
+            </div>
+            <div class="p-6 border-t border-gray-100 dark:border-gray-800">
+                <button
+                    class="w-full py-4 bg-charcoal dark:bg-cream text-white dark:text-charcoal font-semibold rounded-xl hover:bg-earthy dark:hover:bg-earthy transition-colors">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" id="authOverlay"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4 pointer-events-none">
+            <div class="bg-white dark:bg-charcoal w-full max-w-md rounded-3xl p-8 shadow-2xl pointer-events-auto relative transform scale-95 opacity-0 transition-all duration-300"
+                id="authPanel">
+                <button id="closeAuthBtn"
+                    class="absolute top-6 right-6 text-xl text-gray-400 hover:text-charcoal dark:hover:text-white"><i
+                        class="bi bi-x-lg"></i></button>
+                <div class="text-center mb-8">
+                    <h3 class="font-heading text-3xl mb-2">Welcome Back</h3>
+                    <p class="text-gray-500 dark:text-gray-400">Sign in to manage your raw treat subscriptions.</p>
+                </div>
+                <form onsubmit="event.preventDefault();" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Email</label>
+                        <input type="email"
+                            class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-transparent focus:outline-none focus:border-earthy transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Password</label>
+                        <input type="password"
+                            class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-transparent focus:outline-none focus:border-earthy transition-colors">
+                    </div>
+                    <button
+                        class="w-full py-3 bg-earthy text-white font-semibold rounded-xl hover:bg-opacity-90 transition-all mt-4">Sign
+                        In</button>
+                </form>
+                <p class="text-center mt-6 text-sm text-gray-500">Don't have an account? <a href="#"
+                        class="text-earthy font-medium">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed w-full top-0 z-40 transition-all duration-300" id="header">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 h-24 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <div
+                    class="w-10 h-10 rounded-full bg-earthy flex items-center justify-center text-white transform group-hover:scale-110 transition-transform">
+                    <i class="bi bi-suit-heart-fill"></i>
+                </div>
+                <span class="font-heading text-xl font-bold tracking-tight">RawCat</span>
+            </a>
+
+            <nav class="hidden lg:flex items-center gap-8">
+                <a href="#hero" class="nav-link text-sm font-medium hover:text-earthy transition-colors">Home</a>
+                <a href="#nutrition"
+                    class="nav-link text-sm font-medium hover:text-earthy transition-colors">Nutrition</a>
+                <a href="#treats" class="nav-link text-sm font-medium hover:text-earthy transition-colors">Treats</a>
+                <a href="#explorer" class="nav-link text-sm font-medium hover:text-earthy transition-colors">Find
+                    Treats</a>
+                <a href="#reviews" class="nav-link text-sm font-medium hover:text-earthy transition-colors">Reviews</a>
+                <a href="#faq" class="nav-link text-sm font-medium hover:text-earthy transition-colors">FAQ</a>
+                <a href="#contact" class="nav-link text-sm font-medium hover:text-earthy transition-colors">Contact</a>
+            </nav>
+
+            <div class="flex items-center gap-4 lg:gap-6">
+                <button id="themeToggle" class="text-xl hover:text-earthy transition-colors"><i
+                        class="bi bi-moon-stars"></i></button>
+                <button id="authBtn" class="text-xl hover:text-earthy transition-colors hidden sm:block"><i
+                        class="bi bi-person"></i></button>
+                <button id="cartBtn" class="text-xl hover:text-earthy transition-colors relative">
+                    <i class="bi bi-bag"></i>
+                    <span
+                        class="absolute -top-1 -right-2 bg-earthy text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                </button>
+                <button id="mobileMenuBtn" class="lg:hidden text-2xl hover:text-earthy transition-colors"><i
+                        class="bi bi-list"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu"
+        class="fixed inset-0 z-30 bg-cream dark:bg-charcoal transform -translate-y-full transition-transform duration-500 lg:hidden pt-28 px-6 pb-12 flex flex-col">
+        <nav class="flex flex-col gap-6 text-2xl font-heading mb-auto">
+            <a href="#hero" class="mobile-nav-link hover:text-earthy transition-colors">Home</a>
+            <a href="#nutrition" class="mobile-nav-link hover:text-earthy transition-colors">Nutrition</a>
+            <a href="#treats" class="mobile-nav-link hover:text-earthy transition-colors">Treats</a>
+            <a href="#explorer" class="mobile-nav-link hover:text-earthy transition-colors">Find Treats</a>
+            <a href="#reviews" class="mobile-nav-link hover:text-earthy transition-colors">Reviews</a>
+            <a href="#faq" class="mobile-nav-link hover:text-earthy transition-colors">FAQ</a>
+            <a href="#contact" class="mobile-nav-link hover:text-earthy transition-colors">Contact</a>
+        </nav>
+        <button class="w-full py-4 bg-earthy text-white font-semibold rounded-xl" id="mobileAuthBtn">Account / Sign
+            In</button>
+    </div>
+
+    <!-- Section 1: Hero -->
+    <section id="hero" class="relative min-h-screen flex items-center pt-24 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 w-full grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+            <div class="animate-fade-up z-10 pt-12 lg:pt-0">
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 dark:bg-black/20 backdrop-blur-sm text-sm font-medium mb-6">
+                    <span class="w-2 h-2 rounded-full bg-earthy animate-pulse"></span>
+                    100% Natural Ingredients
+                </div>
+                <h1 class="font-heading text-5xl md:text-6xl lg:text-7xl leading-[1.1] mb-6">Real Nutrition.<br>Raw
+                    Instinct.<br><span class="text-mutedGreen">Happier Cats.</span></h1>
+                <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-lg leading-relaxed">Give your cat the
+                    natural, nutrient-rich raw diet they crave. Small-batch freeze-dried treats packed with premium
+                    proteins and essential vitamins.</p>
+                <div class="flex flex-wrap items-center gap-4">
+                    <a href="#treats"
+                        class="px-8 py-4 bg-charcoal dark:bg-cream text-white dark:text-charcoal font-semibold rounded-xl hover:bg-earthy dark:hover:bg-earthy transition-colors inline-flex items-center gap-2">
+                        Shop Treats <i class="bi bi-arrow-right"></i>
+                    </a>
+                    <a href="#nutrition"
+                        class="px-8 py-4 bg-transparent border-2 border-charcoal dark:border-cream text-charcoal dark:text-cream font-semibold rounded-xl hover:bg-charcoal hover:text-white dark:hover:bg-cream dark:hover:text-charcoal transition-all shadow-sm hover:shadow-lg hover:-translate-y-1">
+                        Explore Nutrition
+                    </a>
+                </div>
+            </div>
+            <div class="relative animate-fade-in">
+                <div
+                    class="relative rounded-[2rem] overflow-hidden shadow-2xl aspect-[4/5] sm:aspect-square lg:aspect-[4/5]">
+                    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=1000"
+                        alt="Healthy cat eating raw treats" class="w-full h-full object-cover">
+                </div>
+                <!-- Floating Card 1 -->
+                <div
+                    class="absolute -bottom-6 -left-6 bg-white dark:bg-[#2A2A2A] p-4 rounded-2xl shadow-xl flex items-center gap-4 animate-float">
+                    <div
+                        class="w-12 h-12 rounded-full bg-beige dark:bg-[#353535] flex items-center justify-center text-earthy text-xl">
+                        <i class="bi bi-award-fill"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold text-sm">Protein Rich</p>
+                        <p class="text-xs text-gray-500">95% Real Meat</p>
+                    </div>
+                </div>
+                <!-- Floating Card 2 -->
+                <div
+                    class="absolute top-1/4 -right-6 bg-white dark:bg-[#2A2A2A] p-4 rounded-2xl shadow-xl flex items-center gap-4 animate-float-delayed hidden sm:flex">
+                    <div
+                        class="w-12 h-12 rounded-full bg-beige dark:bg-[#353535] flex items-center justify-center text-mutedGreen text-xl">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold text-sm">No Fillers</p>
+                        <p class="text-xs text-gray-500">Zero Artificial</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Why Raw Nutrition -->
+    <section id="nutrition" class="py-24 lg:py-32 relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="text-center max-w-3xl mx-auto mb-16 lg:mb-24 reveal-on-scroll">
+                <h2 class="font-heading text-4xl lg:text-5xl mb-6">Why Raw Nutrition?</h2>
+                <p class="text-gray-600 dark:text-gray-300 text-lg">Cats are obligate carnivores. Their bodies are
+                    designed to thrive on raw, unadulterated meat. We preserve that natural goodness.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Benefit 1 -->
+                <div
+                    class="bg-white dark:bg-[#353535] p-8 rounded-[2rem] shadow-soft hover:-translate-y-2 transition-transform duration-300 reveal-on-scroll">
+                    <div
+                        class="w-16 h-16 rounded-2xl bg-beige dark:bg-[#2A2A2A] flex items-center justify-center text-3xl text-earthy mb-6">
+                        <i class="bi bi-droplet-fill"></i>
+                    </div>
+                    <h3 class="font-heading text-2xl mb-4">High-Quality Protein</h3>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">Sourced from premium cuts of meat,
+                        ensuring optimal muscle health and energy levels for your cat.</p>
+                    <div class="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
+                        <div class="bg-earthy h-full w-[95%]"></div>
+                    </div>
+                    <p class="text-xs text-right mt-2 font-medium text-earthy">95% Meat Content</p>
+                </div>
+
+                <!-- Benefit 2 -->
+                <div
+                    class="bg-mutedGreen p-8 rounded-[2rem] text-white shadow-soft hover:-translate-y-2 transition-transform duration-300 lg:-translate-y-8 reveal-on-scroll">
+                    <div
+                        class="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-3xl mb-6 backdrop-blur-sm">
+                        <i class="bi bi-stars"></i>
+                    </div>
+                    <h3 class="font-heading text-2xl mb-4">Nutrient-Rich Treats</h3>
+                    <p class="text-white/90 leading-relaxed">Gently freeze-dried to lock in essential vitamins,
+                        minerals, and amino acids like Taurine.</p>
+                </div>
+
+                <!-- Benefit 3 -->
+                <div
+                    class="bg-white dark:bg-[#353535] p-8 rounded-[2rem] shadow-soft hover:-translate-y-2 transition-transform duration-300 md:col-span-2 lg:col-span-1 reveal-on-scroll">
+                    <div
+                        class="w-16 h-16 rounded-2xl bg-beige dark:bg-[#2A2A2A] flex items-center justify-center text-3xl text-charcoal dark:text-cream mb-6">
+                        <i class="bi bi-heart-pulse-fill"></i>
+                    </div>
+                    <h3 class="font-heading text-2xl mb-4">Instinct-Friendly</h3>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">Satisfies their natural predatory
+                        cravings with textures and tastes they instinctively love.</p>
+                    <div class="flex items-center gap-4">
+                        <div class="flex -space-x-4">
+                            <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=100&q=80"
+                                class="w-10 h-10 rounded-full border-2 border-white dark:border-[#353535] object-cover">
+                            <img src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&w=100&q=80"
+                                class="w-10 h-10 rounded-full border-2 border-white dark:border-[#353535] object-cover">
+                        </div>
+                        <p class="text-sm font-medium">Loved by 10,000+ cats</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Featured Raw Treats -->
+    <section id="treats" class="py-24 lg:py-32 bg-white dark:bg-[#2A2A2A]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal-on-scroll">
+                <div class="max-w-2xl">
+                    <h2 class="font-heading text-4xl lg:text-5xl mb-4">Featured Treats</h2>
+                    <p class="text-gray-600 dark:text-gray-300">Discover our best-selling single-ingredient and mixed
+                        protein raw treats.</p>
+                </div>
+                <button
+                    class="hidden md:inline-flex items-center gap-2 text-earthy font-medium hover:gap-3 transition-all mt-6 md:mt-0">
+                    View All Products <i class="bi bi-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product 1 -->
+                <div
+                    class="product-card group bg-beige dark:bg-[#353535] rounded-3xl p-4 transition-all duration-300 hover:shadow-2xl reveal-fade-in">
+                    <div class="relative aspect-square rounded-2xl overflow-hidden mb-6 bg-white dark:bg-black/20">
+                        <img src="https://images.unsplash.com/photo-1587593810167-a84920ea0781?auto=format&fit=crop&w=600&q=80"
+                            alt="Chicken Bites"
+                            class="w-full h-full object-cover mix-blend-multiply dark:mix-blend-normal group-hover:scale-110 transition-transform duration-500">
+                        <button
+                            class="absolute top-4 right-4 w-10 h-10 bg-white/80 dark:bg-black/50 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-earthy hover:text-white transition-colors z-10">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </div>
+                    <div class="px-2 pb-2">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-heading text-xl font-bold">Chicken Bites</h3>
+                            <span class="font-semibold text-lg">$14.99</span>
+                        </div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2">Pure freeze-dried chicken
+                            breast. Perfect for all life stages.</p>
+                        <button
+                            class="add-to-cart w-full py-3 bg-white dark:bg-[#2A2A2A] rounded-xl font-medium hover:bg-charcoal hover:text-white dark:hover:bg-cream dark:hover:text-charcoal transition-colors flex justify-center items-center gap-2">
+                            <i class="bi bi-cart-plus"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div
+                    class="product-card group bg-beige dark:bg-[#353535] rounded-3xl p-4 transition-all duration-300 hover:shadow-2xl reveal-fade-in">
+                    <div class="relative aspect-square rounded-2xl overflow-hidden mb-6 bg-white dark:bg-black/20">
+                        <img src="https://images.unsplash.com/photo-1599084993091-1cb5c0721cc6?auto=format&fit=crop&w=600&q=80"
+                            alt="Salmon Cubes"
+                            class="w-full h-full object-cover mix-blend-multiply dark:mix-blend-normal group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="px-2 pb-2">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-heading text-xl font-bold">Salmon Cubes</h3>
+                            <span class="font-semibold text-lg">$16.99</span>
+                        </div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2">Wild-caught raw salmon
+                            rich in Omega-3 fatty acids.</p>
+                        <button
+                            class="add-to-cart w-full py-3 bg-white dark:bg-[#2A2A2A] rounded-xl font-medium hover:bg-charcoal hover:text-white dark:hover:bg-cream dark:hover:text-charcoal transition-colors flex justify-center items-center gap-2">
+                            <i class="bi bi-cart-plus"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div
+                    class="product-card group bg-beige dark:bg-[#353535] rounded-3xl p-4 transition-all duration-300 hover:shadow-2xl reveal-fade-in sm:col-span-2 lg:col-span-1 sm:max-w-md sm:mx-auto lg:max-w-none">
+                    <div class="relative aspect-square rounded-2xl overflow-hidden mb-6 bg-white dark:bg-black/20">
+                        <img src="https://images.pexels.com/photos/39853099/pexels-photo-39853099.jpeg"
+                            alt="Turkey Nuggets"
+                            class="w-full h-full object-cover mix-blend-multiply dark:mix-blend-normal group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="px-2 pb-2">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-heading text-xl font-bold">Turkey Nuggets</h3>
+                            <span class="font-semibold text-lg">$15.99</span>
+                        </div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2">Lean turkey protein for
+                            sensitive stomachs and weight management.</p>
+                        <button
+                            class="add-to-cart w-full py-3 bg-white dark:bg-[#2A2A2A] rounded-xl font-medium hover:bg-charcoal hover:text-white dark:hover:bg-cream dark:hover:text-charcoal transition-colors flex justify-center items-center gap-2">
+                            <i class="bi bi-cart-plus"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center md:hidden">
+                <button class="inline-flex items-center gap-2 text-earthy font-medium hover:gap-3 transition-all">
+                    View All Products <i class="bi bi-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Interactive Nutrition Explorer -->
+    <section id="explorer" class="py-24 lg:py-32 relative overflow-hidden bg-mutedGreen text-white">
+        <div
+            class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmYiLz48L3N2Zz4=')]">
+        </div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+            <div class="text-center mb-16 reveal-fade-up">
+                <h2 class="font-heading text-4xl lg:text-5xl mb-4">Nutrition Explorer</h2>
+                <p class="text-white/80 max-w-2xl mx-auto text-lg">Build the perfect nutrition profile for your cat.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-12 items-start">
+                <div class="lg:col-span-5 space-y-8 reveal-on-scroll">
+                    <div>
+                        <h4 class="font-bold mb-4">1. Select Protein Base</h4>
+                        <div class="flex flex-wrap gap-3">
+                            <button
+                                class="explorer-btn active px-6 py-2 rounded-full border border-white/30 hover:bg-white/10 transition-colors">Poultry</button>
+                            <button
+                                class="explorer-btn px-6 py-2 rounded-full border border-white/30 hover:bg-white/10 transition-colors">Fish</button>
+                            <button
+                                class="explorer-btn px-6 py-2 rounded-full border border-white/30 hover:bg-white/10 transition-colors">Novel
+                                (Rabbit)</button>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-4">2. Cat's Age</h4>
+                        <div class="flex flex-wrap gap-3">
+                            <button
+                                class="explorer-btn px-6 py-2 rounded-full border border-white/30 hover:bg-white/10 transition-colors">Kitten</button>
+                            <button
+                                class="explorer-btn active px-6 py-2 rounded-full border border-white/30 hover:bg-white/10 transition-colors">Adult</button>
+                            <button
+                                class="explorer-btn px-6 py-2 rounded-full border border-white/30 hover:bg-white/10 transition-colors">Senior</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 reveal-on-scroll">
+                    <div
+                        class="bg-white dark:bg-charcoal rounded-[2rem] p-8 text-charcoal dark:text-white shadow-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-earthy/10 rounded-bl-[100px]"></div>
+                        <span
+                            class="inline-block px-3 py-1 bg-earthy/20 text-earthy rounded-full text-xs font-bold mb-6 uppercase tracking-wider">Perfect
+                            Match</span>
+
+                        <div class="flex flex-col sm:flex-row gap-8 items-center">
+                            <img src="https://images.unsplash.com/photo-1604543519969-53696803716a?auto=format&fit=crop&w=300&q=80"
+                                alt="Recommended Treat" class="w-48 h-48 rounded-2xl object-cover shadow-lg">
+                            <div>
+                                <h3 class="font-heading text-3xl mb-2">Chicken & Duck Blend</h3>
+                                <p class="text-gray-500 dark:text-gray-400 mb-6">High protein, easy to digest, perfect
+                                    for active adult cats.</p>
+
+                                <div class="grid grid-cols-2 gap-4 mb-8">
+                                    <div>
+                                        <p class="text-sm text-gray-500">Protein</p>
+                                        <p class="font-bold text-lg">96%</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-500">Calories/Treat</p>
+                                        <p class="font-bold text-lg">2 kcal</p>
+                                    </div>
+                                </div>
+
+                                <button
+                                    class="w-full sm:w-auto px-8 py-3 bg-earthy text-white font-semibold rounded-xl hover:bg-opacity-90 transition-all shadow-lg hover:shadow-earthy/30">
+                                    View Recommended Treat
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Ingredient Journey -->
+    <section id="journey" class="py-24 lg:py-32 bg-beige dark:bg-[#2A2A2A]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <h2 class="font-heading text-4xl lg:text-5xl mb-16 text-center reveal-on-scroll">From Nature to Bowl</h2>
+
+            <div class="relative">
+                <!-- Connecting Line Desktop -->
+                <div
+                    class="hidden lg:block absolute top-1/2 left-0 w-full h-1 bg-gray-300 dark:bg-gray-700 -translate-y-1/2 z-0 rounded-full">
+                </div>
+
+                <!-- Connecting Line Mobile -->
+                <div class="lg:hidden absolute top-0 left-8 w-1 h-full bg-gray-300 dark:bg-gray-700 z-0 rounded-full">
+                </div>
+
+                <div class="grid lg:grid-cols-4 gap-12 lg:gap-6 relative z-10">
+                    <!-- Step 1 -->
+                    <div class="flex lg:flex-col items-center lg:text-center gap-6 lg:gap-4 reveal-fade-up">
+                        <div
+                            class="w-16 h-16 lg:w-24 lg:h-24 rounded-full border-4 border-white dark:border-[#2A2A2A] bg-white dark:bg-charcoal shadow-xl flex items-center justify-center flex-shrink-0 z-10 overflow-hidden relative group">
+                            <img src="https://images.unsplash.com/photo-1588168333986-5078d3ae3976?auto=format&fit=crop&w=200&q=80"
+                                alt="Raw Meat"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                        </div>
+                        <div>
+                            <span class="text-earthy font-bold text-sm mb-1 block">Step 01</span>
+                            <h4 class="font-heading text-xl font-bold mb-2">Selected Cuts</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Human-grade raw meat sourced from
+                                trusted farms.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="flex lg:flex-col items-center lg:text-center gap-6 lg:gap-4 reveal-on-scroll"
+                        style="transition-delay: 100ms;">
+                        <div
+                            class="w-16 h-16 lg:w-24 lg:h-24 rounded-full border-4 border-white dark:border-[#2A2A2A] bg-white dark:bg-charcoal shadow-xl flex items-center justify-center flex-shrink-0 z-10 text-2xl text-mutedGreen">
+                            <i class="bi bi-snow2"></i>
+                        </div>
+                        <div>
+                            <span class="text-earthy font-bold text-sm mb-1 block">Step 02</span>
+                            <h4 class="font-heading text-xl font-bold mb-2">Freeze-Drying</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">48-hour gentle freeze process locks in
+                                nutrients.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="flex lg:flex-col items-center lg:text-center gap-6 lg:gap-4 reveal-on-scroll"
+                        style="transition-delay: 200ms;">
+                        <div
+                            class="w-16 h-16 lg:w-24 lg:h-24 rounded-full border-4 border-white dark:border-[#2A2A2A] bg-white dark:bg-charcoal shadow-xl flex items-center justify-center flex-shrink-0 z-10 text-2xl text-charcoal dark:text-cream">
+                            <i class="bi bi-clipboard-check"></i>
+                        </div>
+                        <div>
+                            <span class="text-earthy font-bold text-sm mb-1 block">Step 03</span>
+                            <h4 class="font-heading text-xl font-bold mb-2">Quality Check</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Strict safety testing on every small
+                                batch.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="flex lg:flex-col items-center lg:text-center gap-6 lg:gap-4 reveal-on-scroll"
+                        style="transition-delay: 300ms;">
+                        <div
+                            class="w-16 h-16 lg:w-24 lg:h-24 rounded-full border-4 border-white dark:border-[#2A2A2A] bg-white dark:bg-charcoal shadow-xl flex items-center justify-center flex-shrink-0 z-10 text-2xl text-earthy">
+                            <i class="bi bi-box-seam"></i>
+                        </div>
+                        <div>
+                            <span class="text-earthy font-bold text-sm mb-1 block">Step 04</span>
+                            <h4 class="font-heading text-xl font-bold mb-2">Packed Fresh</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Sealed in UV-resistant pouches for
+                                maximum freshness.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Quality & Trust -->
+    <section class="py-24 lg:py-32 bg-white dark:bg-charcoal">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
+            <div class="relative reveal-on-scroll order-2 lg:order-1">
+                <div class="rounded-3xl overflow-hidden shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?auto=format&fit=crop&w=1000&q=80"
+                        alt="Quality Cat Food" class="w-full h-full object-cover">
+                </div>
+                <!-- Trust Badge -->
+                <div
+                    class="absolute -top-6 -right-6 lg:-right-12 bg-white dark:bg-[#353535] p-6 rounded-2xl shadow-xl animate-float">
+                    <div class="flex items-center gap-4">
+                        <div class="text-4xl text-earthy"><i class="bi bi-shield-check"></i></div>
+                        <div>
+                            <h4 class="font-bold text-lg leading-tight">100% Secure</h4>
+                            <p class="text-sm text-gray-500">Pathogen-free certified</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal-on-scroll order-1 lg:order-2">
+                <h2 class="font-heading text-4xl lg:text-5xl mb-6">Transparency in Every Bite.</h2>
+                <p class="text-gray-600 dark:text-gray-300 text-lg mb-8">We believe you should know exactly what goes
+                    into your cat's body. No hidden fillers, no mysterious "meat meals", just pure, traceable
+                    ingredients.</p>
+
+                <div class="space-y-6 mb-10">
+                    <div class="flex items-start gap-4">
+                        <div class="text-mutedGreen text-2xl mt-1"><i class="bi bi-check2-circle"></i></div>
+                        <div>
+                            <h4 class="font-bold text-lg">Single Source Proteins</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">Makes it easy to manage food
+                                sensitivities.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="text-mutedGreen text-2xl mt-1"><i class="bi bi-check2-circle"></i></div>
+                        <div>
+                            <h4 class="font-bold text-lg">Small-Batch Preparation</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">Ensures consistent quality and maximum
+                                freshness.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="text-mutedGreen text-2xl mt-1"><i class="bi bi-check2-circle"></i></div>
+                        <div>
+                            <h4 class="font-bold text-lg">Grain & Gluten Free</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">Biologically appropriate nutrition.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button
+                    class="px-8 py-4 border-2 border-charcoal dark:border-cream rounded-xl font-semibold hover:bg-charcoal hover:text-white dark:hover:bg-cream dark:hover:text-charcoal transition-colors">
+                    See Ingredient Transparency
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 7: Treat Matcher -->
+    <section class="py-24 lg:py-32 bg-beige dark:bg-[#353535] text-center px-6">
+        <div
+            class="max-w-4xl mx-auto bg-white dark:bg-charcoal rounded-[3rem] p-10 lg:p-16 shadow-2xl reveal-on-scroll">
+            <span class="text-earthy font-bold uppercase tracking-widest text-sm mb-4 block">Personalization</span>
+            <h2 class="font-heading text-4xl lg:text-5xl mb-6">Find Their Favorite Treat</h2>
+            <p class="text-gray-600 dark:text-gray-300 mb-12 max-w-lg mx-auto">Take a quick 3-step quiz to find the
+                perfect raw treat for your cat's unique taste and health needs.</p>
+
+            <!-- Progress -->
+            <div class="flex justify-center items-center gap-2 mb-12">
+                <div class="w-12 h-2 bg-earthy rounded-full"></div>
+                <div class="w-12 h-2 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                <div class="w-12 h-2 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-8">What is your cat's texture preference?</h3>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+                <button
+                    class="matcher-card border-2 border-transparent hover:border-earthy bg-gray-50 dark:bg-[#2A2A2A] p-6 rounded-2xl transition-all flex flex-col items-center gap-4 group">
+                    <i class="bi bi-box text-3xl text-gray-400 group-hover:text-earthy transition-colors"></i>
+                    <span class="font-medium">Crunchy Cubes</span>
+                </button>
+                <button
+                    class="matcher-card border-2 border-transparent hover:border-earthy bg-gray-50 dark:bg-[#2A2A2A] p-6 rounded-2xl transition-all flex flex-col items-center gap-4 group">
+                    <i class="bi bi-circle text-3xl text-gray-400 group-hover:text-earthy transition-colors"></i>
+                    <span class="font-medium">Soft Bites</span>
+                </button>
+                <button
+                    class="matcher-card border-2 border-transparent hover:border-earthy bg-gray-50 dark:bg-[#2A2A2A] p-6 rounded-2xl transition-all flex flex-col items-center gap-4 group">
+                    <i class="bi bi-layers text-3xl text-gray-400 group-hover:text-earthy transition-colors"></i>
+                    <span class="font-medium">Flaky Shreds</span>
+                </button>
+                <button
+                    class="matcher-card border-2 border-transparent hover:border-earthy bg-gray-50 dark:bg-[#2A2A2A] p-6 rounded-2xl transition-all flex flex-col items-center gap-4 group">
+                    <i class="bi bi-question-lg text-3xl text-gray-400 group-hover:text-earthy transition-colors"></i>
+                    <span class="font-medium">Not Sure</span>
+                </button>
+            </div>
+
+            <button
+                class="px-10 py-4 bg-charcoal dark:bg-cream text-white dark:text-charcoal font-semibold rounded-xl hover:bg-earthy dark:hover:bg-earthy transition-colors inline-flex items-center gap-2">
+                Next Step <i class="bi bi-arrow-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Section 8: Customer Stories -->
+    <section id="reviews" class="py-24 lg:py-32 bg-white dark:bg-[#2A2A2A] overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16 reveal-fade-up">
+                <h2 class="font-heading text-4xl lg:text-5xl mb-4">Loved by Felines. <br>Trusted by Humans.</h2>
+                <div class="flex items-center justify-center gap-2 text-earthy text-xl mb-4">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                        class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 font-medium">4.9/5 Average rating from 2,000+ reviews</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div
+                    class="bg-beige dark:bg-[#353535] p-8 rounded-[2rem] shadow-soft reveal-fade-up flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://images.unsplash.com/photo-1513245543132-31f507417b26?auto=format&fit=crop&w=150&q=80"
+                                alt="Luna" class="w-12 h-12 rounded-full object-cover shadow-md">
+                            <div>
+                                <h4 class="font-bold text-sm">Sarah & Luna</h4>
+                                <p class="text-xs text-gray-500">Purchased: Salmon Cubes</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 italic mb-6">"Luna is incredibly picky, but she goes
+                            crazy for these salmon cubes. Her coat is noticeably shinier and I love knowing exactly what
+                            she's eating."</p>
+                    </div>
+                    <div class="text-earthy text-sm"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                            class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-beige dark:bg-[#353535] p-8 rounded-[2rem] shadow-soft reveal-fade-up flex flex-col justify-between"
+                    style="transition-delay: 100ms;">
+                    <div>
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&w=100&q=80"
+                                alt="Milo" class="w-12 h-12 rounded-full object-cover shadow-md">
+                            <div>
+                                <h4 class="font-bold text-sm">James & Milo</h4>
+                                <p class="text-xs text-gray-500">Purchased: Chicken Bites</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 italic mb-6">"The chicken bites are perfect for
+                            training. Small, crunchy, and no mess. Highly recommend for kittens!"</p>
+                    </div>
+                    <div class="text-earthy text-sm"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                            class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-beige dark:bg-[#353535] p-8 rounded-[2rem] shadow-soft reveal-fade-up flex flex-col justify-between"
+                    style="transition-delay: 200ms;">
+                    <div>
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=100&q=80"
+                                alt="Bella" class="w-12 h-12 rounded-full object-cover shadow-md">
+                            <div>
+                                <h4 class="font-bold text-sm">Elena & Bella</h4>
+                                <p class="text-xs text-gray-500">Purchased: Rabbit Crunch</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 italic mb-6">"Finally found a treat that doesn't
+                            upset my senior cat's stomach. The rabbit crunch is her new obsession."</p>
+                    </div>
+                    <div class="text-earthy text-sm"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                            class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 9: FAQ -->
+    <section id="faq" class="py-24 lg:py-32 bg-cream dark:bg-charcoal">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16 reveal-fade-up">
+                <h2 class="font-heading text-4xl lg:text-5xl mb-4 leading-tight">Got Questions? We Have Answers.</h2>
+            </div>
+            <div class="grid lg:grid-cols-2 gap-16">
+                <div class="reveal-slide-left flex flex-col h-full">
+                    <div class="rounded-3xl overflow-hidden mb-6 aspect-video">
+                        <img src="https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&w=800&q=80"
+                            alt="Curious cat" class="w-full h-full object-cover">
+                    </div>
+                    <p
+                        class="text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-[#2A2A2A] p-4 rounded-xl border border-gray-200 dark:border-gray-700 mt-auto">
+                        <i class="bi bi-info-circle mr-2 text-earthy"></i> While raw nutrition is excellent for many
+                        cats, please consult your veterinarian before making major dietary changes, especially for cats
+                        with specific medical conditions.
+                    </p>
+                </div>
+
+                <div class="reveal-slide-right flex flex-col justify-between h-full gap-4">
+                    <!-- FAQ Item -->
+                    <div
+                        class="faq-item border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden bg-white dark:bg-[#353535]">
+                        <button
+                            class="faq-btn w-full text-left px-6 py-5 font-semibold text-lg flex justify-between items-center focus:outline-none">
+                            What are raw freeze-dried treats?
+                            <i class="bi bi-plus-lg transition-transform text-earthy"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-5 text-gray-600 dark:text-gray-300">
+                            They are raw meat that has undergone a process to remove moisture at very low temperatures.
+                            This preserves the raw nutrients and flavor without needing refrigeration, making them safe
+                            and convenient.
+                        </div>
+                    </div>
+                    <!-- FAQ Item -->
+                    <div
+                        class="faq-item border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden bg-white dark:bg-[#353535]">
+                        <button
+                            class="faq-btn w-full text-left px-6 py-5 font-semibold text-lg flex justify-between items-center focus:outline-none">
+                            How should I store them?
+                            <i class="bi bi-plus-lg transition-transform text-earthy"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-5 text-gray-600 dark:text-gray-300">
+                            Keep them in their original resealable pouch in a cool, dry place out of direct sunlight. No
+                            refrigeration is needed.
+                        </div>
+                    </div>
+                    <!-- FAQ Item -->
+                    <div
+                        class="faq-item border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden bg-white dark:bg-[#353535]">
+                        <button
+                            class="faq-btn w-full text-left px-6 py-5 font-semibold text-lg flex justify-between items-center focus:outline-none">
+                            How many treats can I give per day?
+                            <i class="bi bi-plus-lg transition-transform text-earthy"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-5 text-gray-600 dark:text-gray-300">
+                            Treats should make up no more than 10% of your cat's daily caloric intake. Usually, 2-4
+                            pieces a day is perfect for an average adult cat.
+                        </div>
+                    </div>
+                    <!-- FAQ Item -->
+                    <div
+                        class="faq-item border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden bg-white dark:bg-[#353535]">
+                        <button
+                            class="faq-btn w-full text-left px-6 py-5 font-semibold text-lg flex justify-between items-center focus:outline-none">
+                            Are these safe for kittens?
+                            <i class="bi bi-plus-lg transition-transform text-earthy"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-5 text-gray-600 dark:text-gray-300">
+                            Yes! Our treats are safe for all life stages. For young kittens, we recommend breaking the
+                            treats into smaller pieces or slightly rehydrating them with warm water.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 10: Contact & Map -->
+    <section id="contact" class="py-24 lg:py-32 bg-white dark:bg-[#2A2A2A]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16 reveal-fade-up">
+                <span class="text-earthy font-bold uppercase tracking-widest text-sm mb-4 block">Get In Touch</span>
+                <h2 class="font-heading text-4xl lg:text-5xl mb-4">We'd Love to Hear From You</h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Have questions about our treats or need
+                    help building the perfect nutrition plan? Reach out to our team of feline nutrition specialists.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-16 items-stretch">
+                <!-- Contact Information -->
+                <div class="space-y-10 reveal-slide-left flex flex-col justify-center">
+                    <div class="flex items-start gap-6">
+                        <div
+                            class="w-14 h-14 rounded-2xl bg-beige dark:bg-[#353535] flex items-center justify-center text-earthy text-2xl flex-shrink-0 shadow-sm">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-heading text-2xl font-bold mb-2">Visit Our Store</h4>
+                            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                                123 Paws Avenue<br>
+                                Feline District, NY 10012<br>
+                                United States
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-6">
+                        <div
+                            class="w-14 h-14 rounded-2xl bg-beige dark:bg-[#353535] flex items-center justify-center text-earthy text-2xl flex-shrink-0 shadow-sm">
+                            <i class="bi bi-envelope-paper-fill"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-heading text-2xl font-bold mb-2">Email Us</h4>
+                            <p class="text-gray-600 dark:text-gray-400 mb-1">For general inquiries:</p>
+                            <a href="mailto:hello@rawcatfood.com"
+                                class="text-charcoal dark:text-white font-semibold hover:text-earthy dark:hover:text-earthy transition-colors">hello@rawcatfood.com</a>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-6">
+                        <div
+                            class="w-14 h-14 rounded-2xl bg-beige dark:bg-[#353535] flex items-center justify-center text-earthy text-2xl flex-shrink-0 shadow-sm">
+                            <i class="bi bi-telephone-fill"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-heading text-2xl font-bold mb-2">Call Us</h4>
+                            <p class="text-gray-600 dark:text-gray-400 mb-1">Mon-Fri from 9am to 6pm:</p>
+                            <a href="tel:+1234567890"
+                                class="text-charcoal dark:text-white font-semibold hover:text-earthy dark:hover:text-earthy transition-colors">+1
+                                (234) 567-890</a>
+                        </div>
+                    </div>
+
+                    <div class="pt-6 border-t border-gray-100 dark:border-gray-700">
+                        <h4 class="font-bold mb-4 text-charcoal dark:text-white">Follow Our Journey</h4>
+                        <div class="flex gap-4">
+                            <a href="#"
+                                class="w-12 h-12 rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center text-xl hover:bg-earthy hover:text-white hover:border-earthy transition-all text-gray-500 dark:text-gray-400"><i
+                                    class="bi bi-instagram"></i></a>
+                            <a href="#"
+                                class="w-12 h-12 rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center text-xl hover:bg-earthy hover:text-white hover:border-earthy transition-all text-gray-500 dark:text-gray-400"><i
+                                    class="bi bi-facebook"></i></a>
+                            <a href="#"
+                                class="w-12 h-12 rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center text-xl hover:bg-earthy hover:text-white hover:border-earthy transition-all text-gray-500 dark:text-gray-400"><i
+                                    class="bi bi-tiktok"></i></a>
+                            <a href="#"
+                                class="w-12 h-12 rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center text-xl hover:bg-earthy hover:text-white hover:border-earthy transition-all text-gray-500 dark:text-gray-400"><i
+                                    class="bi bi-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Map -->
+                <div class="reveal-slide-right h-full min-h-[400px]">
+                    <div
+                        class="w-full h-full rounded-[2rem] overflow-hidden shadow-soft relative bg-gray-100 dark:bg-[#353535] group">
+                        <iframe src="https://maps.google.com/maps?q=New%20York&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade" class="absolute inset-0">
+                        </iframe>
+
+                        <!-- Map Overlay Label -->
+                        <div
+                            class="absolute bottom-6 left-6 right-6 bg-white/95 dark:bg-[#2A2A2A]/95 backdrop-blur-md p-4 rounded-2xl shadow-lg flex items-center gap-4 transition-transform duration-300 group-hover:-translate-y-2">
+                            <div
+                                class="w-10 h-10 rounded-full bg-earthy text-white flex items-center justify-center flex-shrink-0 shadow-md">
+                                <i class="bi bi-shop"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-sm text-charcoal dark:text-white">RawCat HQ</h5>
+                                <p class="text-xs text-gray-500">Open until 6:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 11: CTA & Footer -->
+    <footer class="bg-charcoal text-white pt-24 pb-8 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-earthy opacity-10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-mutedGreen opacity-10 rounded-full blur-3xl"></div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+            <!-- CTA Area -->
+            <div
+                class="bg-white/5 border border-white/10 rounded-[3rem] p-12 lg:p-20 text-center mb-24 backdrop-blur-sm reveal-fade-in">
+                <h2 class="font-heading text-4xl lg:text-6xl mb-6">Make Every Treat Count.</h2>
+                <p class="text-gray-300 text-lg mb-10 max-w-2xl mx-auto">Upgrade your cat's reward time with natural,
+                    raw nutrition they instinctively crave.</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button
+                        class="px-10 py-4 bg-earthy text-white font-semibold rounded-xl hover:bg-opacity-90 transition-all text-lg shadow-lg shadow-earthy/30">
+                        Shop Treats Now
+                    </button>
+                    <button
+                        class="px-10 py-4 border border-white/20 hover:bg-white/10 font-semibold rounded-xl transition-all text-lg">
+                        Contact Us
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 border-b border-white/10 pb-16">
+                <div class="lg:col-span-1">
+                    <a href="#" class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-full bg-earthy flex items-center justify-center text-white">
+                            <i class="bi bi-suit-heart-fill"></i>
+                        </div>
+                        <span class="font-heading text-xl font-bold tracking-tight">RawCat</span>
+                    </a>
+                    <p class="text-gray-400 text-sm mb-6">Premium, natural, and highly nutritious raw treats for cats.
+                        Real nutrition for happier felines.</p>
+                    <div class="flex gap-4">
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-earthy transition-colors"><i
+                                class="bi bi-instagram"></i></a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-earthy transition-colors"><i
+                                class="bi bi-facebook"></i></a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-earthy transition-colors"><i
+                                class="bi bi-tiktok"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Shop</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-earthy transition-colors">All Treats</a></li>
+                        <li><a href="#" class="hover:text-earthy transition-colors">Poultry Treats</a></li>
+                        <li><a href="#" class="hover:text-earthy transition-colors">Fish Treats</a></li>
+                        <li><a href="#" class="hover:text-earthy transition-colors">Mixed Proteins</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Learn</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li><a href="#nutrition" class="hover:text-earthy transition-colors">Raw Nutrition 101</a></li>
+                        <li><a href="#faq" class="hover:text-earthy transition-colors">FAQ</a></li>
+                        <li><a href="#" class="hover:text-earthy transition-colors">Feeding Guide</a></li>
+                        <li><a href="#reviews" class="hover:text-earthy transition-colors">Reviews</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Stay Updated</h4>
+                    <p class="text-sm text-gray-400 mb-4">Get cat nutrition tips & new treat drops.</p>
+                    <form onsubmit="event.preventDefault();" class="flex gap-2">
+                        <input type="email" placeholder="Enter email"
+                            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-earthy text-white">
+                        <button type="submit"
+                            class="bg-earthy text-white px-4 rounded-xl hover:bg-opacity-90 transition-colors"><i
+                                class="bi bi-send-fill"></i></button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 gap-4">
+                <p>&copy; 2026 Raw Cat Food Treats. All rights reserved.</p>
+                <div class="flex gap-6 items-center">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+                        class="ml-2 md:ml-6 w-10 h-10 rounded-full bg-white/10 hover:bg-earthy text-white flex items-center justify-center transition-all hover:-translate-y-1 shadow-lg"
+                        title="Back to top">
+                        <i class="bi bi-arrow-up"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+
+</html>
