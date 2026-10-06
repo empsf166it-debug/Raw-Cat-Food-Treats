@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <!-- Background -->
+  <rect width="300" height="300" fill="#f4f1ea"/>
+  
+  <!-- Subtle shadow under bowl -->
+  <ellipse cx="150" cy="220" rx="90" ry="20" fill="#d0caca" opacity="0.7"/>
+  
+  <!-- Bowl -->
+  <path d="M60 160 C60 230, 240 230, 240 160 Z" fill="#e27c59" />
+  <!-- Bowl Lip -->
+  <ellipse cx="150" cy="160" rx="90" ry="15" fill="#cf6846" />
+  <ellipse cx="150" cy="160" rx="80" ry="12" fill="#bc5a3a" />
+  
+  <!-- Cat Food Pieces (Kibbles/Treats) -->
+  <!-- Back row -->
+  <circle cx="120" cy="155" r="12" fill="#6d4c41"/>
+  <circle cx="140" cy="152" r="14" fill="#795548"/>
+  <circle cx="160" cy="155" r="13" fill="#5d4037"/>
+  <circle cx="180" cy="157" r="11" fill="#6d4c41"/>
+  
+  <!-- Middle row -->
+  <circle cx="110" cy="165" r="13" fill="#5d4037"/>
+  <circle cx="130" cy="162" r="15" fill="#8d6e63"/>
+  <circle cx="150" cy="160" r="16" fill="#795548"/>
+  <circle cx="170" cy="162" r="14" fill="#6d4c41"/>
+  <circle cx="190" cy="166" r="12" fill="#5d4037"/>
+  
+  <!-- Front row -->
+  <circle cx="125" cy="172" r="14" fill="#795548"/>
+  <circle cx="145" cy="170" r="15" fill="#6d4c41"/>
+  <circle cx="165" cy="172" r="13" fill="#5d4037"/>
+  
+  <!-- A few scattered pieces -->
+  <circle cx="75" cy="215" r="10" fill="#795548"/>
+  <circle cx="225" cy="210" r="12" fill="#6d4c41"/>
+  <circle cx="210" cy="225" r="9" fill="#5d4037"/>
+  
+  <!-- Steam/Aroma lines -->
+  <path d="M130 130 Q 120 100 130 70" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+  <path d="M150 120 Q 140 90 150 60" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+  <path d="M170 130 Q 160 100 170 70" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+</svg>

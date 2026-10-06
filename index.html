@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth overflow-x-hidden">
 
 <head>
     <meta charset="UTF-8">
@@ -7,6 +7,7 @@
     <title>Raw Cat Food Treats | Real Nutrition for Cats</title>
     <meta name="description"
         content="Premium, natural, and highly nutritious raw treats for cats. Real nutrition for happier cats.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -89,10 +90,15 @@
                     class="absolute top-6 right-6 text-xl text-gray-400 hover:text-charcoal dark:hover:text-white"><i
                         class="bi bi-x-lg"></i></button>
                 <div class="text-center mb-8">
-                    <h3 class="font-heading text-3xl mb-2">Welcome Back</h3>
-                    <p class="text-gray-500 dark:text-gray-400">Sign in to manage your raw treat subscriptions.</p>
+                    <h3 id="authTitle" class="font-heading text-3xl mb-2">Welcome Back</h3>
+                    <p id="authSubtitle" class="text-gray-500 dark:text-gray-400">Sign in to manage your raw treat subscriptions.</p>
                 </div>
                 <form onsubmit="event.preventDefault();" class="space-y-4">
+                    <div id="nameField" class="hidden">
+                        <label class="block text-sm font-medium mb-2">Full Name</label>
+                        <input type="text"
+                            class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-transparent focus:outline-none focus:border-earthy transition-colors">
+                    </div>
                     <div>
                         <label class="block text-sm font-medium mb-2">Email</label>
                         <input type="email"
@@ -103,11 +109,11 @@
                         <input type="password"
                             class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-transparent focus:outline-none focus:border-earthy transition-colors">
                     </div>
-                    <button
+                    <button id="authSubmitBtn"
                         class="w-full py-3 bg-earthy text-white font-semibold rounded-xl hover:bg-opacity-90 transition-all mt-4">Sign
                         In</button>
                 </form>
-                <p class="text-center mt-6 text-sm text-gray-500">Don't have an account? <a href="#"
+                <p class="text-center mt-6 text-sm text-gray-500"><span id="authToggleText">Don't have an account?</span> <a href="#" id="toggleAuthModeBtn"
                         class="text-earthy font-medium">Sign up</a></p>
             </div>
         </div>
@@ -137,16 +143,20 @@
             </nav>
 
             <div class="flex items-center gap-4 lg:gap-6">
-                <button id="themeToggle" class="text-xl hover:text-earthy transition-colors"><i
+                <button id="themeToggle"
+                    class="text-xl hover:text-earthy transition-colors focus:outline-none focus:ring-2 focus:ring-earthy rounded p-1"><i
                         class="bi bi-moon-stars"></i></button>
-                <button id="authBtn" class="text-xl hover:text-earthy transition-colors hidden sm:block"><i
+                <button id="authBtn"
+                    class="text-xl hover:text-earthy transition-colors hidden sm:block focus:outline-none focus:ring-2 focus:ring-earthy rounded p-1"><i
                         class="bi bi-person"></i></button>
-                <button id="cartBtn" class="text-xl hover:text-earthy transition-colors relative">
+                <button id="cartBtn"
+                    class="text-xl hover:text-earthy transition-colors relative focus:outline-none focus:ring-2 focus:ring-earthy rounded p-1">
                     <i class="bi bi-bag"></i>
                     <span
                         class="absolute -top-1 -right-2 bg-earthy text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
                 </button>
-                <button id="mobileMenuBtn" class="lg:hidden text-2xl hover:text-earthy transition-colors"><i
+                <button id="mobileMenuBtn"
+                    class="lg:hidden text-2xl hover:text-earthy transition-colors focus:outline-none focus:ring-2 focus:ring-earthy rounded p-1"><i
                         class="bi bi-list"></i></button>
             </div>
         </div>
@@ -182,13 +192,13 @@
                 <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-lg leading-relaxed">Give your cat the
                     natural, nutrient-rich raw diet they crave. Small-batch freeze-dried treats packed with premium
                     proteins and essential vitamins.</p>
-                <div class="flex flex-wrap items-center gap-4">
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
                     <a href="#treats"
-                        class="px-8 py-4 bg-charcoal dark:bg-cream text-white dark:text-charcoal font-semibold rounded-xl hover:bg-earthy dark:hover:bg-earthy transition-colors inline-flex items-center gap-2">
+                        class="w-full sm:w-auto px-8 py-4 bg-charcoal dark:bg-cream text-white dark:text-charcoal font-semibold rounded-xl hover:bg-earthy dark:hover:bg-earthy transition-colors flex justify-center items-center gap-2">
                         Shop Treats <i class="bi bi-arrow-right"></i>
                     </a>
                     <a href="#nutrition"
-                        class="px-8 py-4 bg-transparent border-2 border-charcoal dark:border-cream text-charcoal dark:text-cream font-semibold rounded-xl hover:bg-charcoal hover:text-white dark:hover:bg-cream dark:hover:text-charcoal transition-all shadow-sm hover:shadow-lg hover:-translate-y-1">
+                        class="w-full sm:w-auto px-8 py-4 bg-transparent border-2 border-charcoal dark:border-cream text-charcoal dark:text-cream font-semibold rounded-xl hover:bg-charcoal hover:text-white dark:hover:bg-cream dark:hover:text-charcoal transition-all shadow-sm hover:shadow-lg hover:-translate-y-1 text-center">
                         Explore Nutrition
                     </a>
                 </div>
@@ -267,12 +277,12 @@
 
                 <!-- Benefit 3 -->
                 <div
-                    class="bg-white dark:bg-[#353535] p-8 rounded-[2rem] shadow-soft hover:-translate-y-2 transition-transform duration-300 md:col-span-2 lg:col-span-1 reveal-on-scroll">
+                    class="bg-white dark:bg-[#353535] p-8 rounded-[2rem] shadow-soft hover:-translate-y-2 transition-transform duration-300 md:col-span-2 md:w-[calc(50%-1rem)] md:mx-auto lg:col-span-1 lg:w-full lg:mx-0 reveal-on-scroll">
                     <div
                         class="w-16 h-16 rounded-2xl bg-beige dark:bg-[#2A2A2A] flex items-center justify-center text-3xl text-charcoal dark:text-cream mb-6">
                         <i class="bi bi-heart-pulse-fill"></i>
                     </div>
-                    <h3 class="font-heading text-2xl mb-4">Instinct-Friendly</h3>
+                    <h3 class="font-heading text-2xl mb-4">Instinct-<br>Friendly</h3>
                     <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">Satisfies their natural predatory
                         cravings with textures and tastes they instinctively love.</p>
                     <div class="flex items-center gap-4">
@@ -431,8 +441,8 @@
                             Match</span>
 
                         <div class="flex flex-col sm:flex-row gap-8 items-center">
-                            <img src="https://images.unsplash.com/photo-1604543519969-53696803716a?auto=format&fit=crop&w=300&q=80"
-                                alt="Recommended Treat" class="w-48 h-48 rounded-2xl object-cover shadow-lg">
+                            <img src="treat.svg" alt="Recommended Treat"
+                                class="w-48 h-48 rounded-2xl object-cover shadow-lg bg-[#f4f1ea]">
                             <div>
                                 <h3 class="font-heading text-3xl mb-2">Chicken & Duck Blend</h3>
                                 <p class="text-gray-500 dark:text-gray-400 mb-6">High protein, easy to digest, perfect
@@ -543,7 +553,7 @@
     </section>
 
     <!-- Section 6: Quality & Trust -->
-    <section class="py-24 lg:py-32 bg-white dark:bg-charcoal">
+    <section class="py-24 lg:py-32 bg-white dark:bg-charcoal overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
             <div class="relative reveal-on-scroll order-2 lg:order-1">
                 <div class="rounded-3xl overflow-hidden shadow-2xl">
@@ -605,41 +615,46 @@
     <!-- Section 7: Treat Matcher -->
     <section class="py-24 lg:py-32 bg-beige dark:bg-[#353535] text-center px-6">
         <div
-            class="max-w-4xl mx-auto bg-white dark:bg-charcoal rounded-[3rem] p-10 lg:p-16 shadow-2xl reveal-on-scroll">
+            class="max-w-4xl mx-auto bg-white dark:bg-charcoal rounded-[2rem] md:rounded-[3rem] p-6 sm:p-10 lg:p-16 shadow-2xl reveal-on-scroll w-full">
             <span class="text-earthy font-bold uppercase tracking-widest text-sm mb-4 block">Personalization</span>
-            <h2 class="font-heading text-4xl lg:text-5xl mb-6">Find Their Favorite Treat</h2>
-            <p class="text-gray-600 dark:text-gray-300 mb-12 max-w-lg mx-auto">Take a quick 3-step quiz to find the
+            <h2 class="font-heading text-3xl sm:text-4xl lg:text-5xl mb-6">Find Their Favorite Treat</h2>
+            <p class="text-gray-600 dark:text-gray-300 mb-12 max-w-lg mx-auto text-sm sm:text-base">Take a quick 3-step
+                quiz to find the
                 perfect raw treat for your cat's unique taste and health needs.</p>
 
             <!-- Progress -->
-            <div class="flex justify-center items-center gap-2 mb-12">
+            <div class="flex justify-center items-center gap-2 mb-10 sm:mb-12">
                 <div class="w-12 h-2 bg-earthy rounded-full"></div>
                 <div class="w-12 h-2 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
                 <div class="w-12 h-2 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
             </div>
 
-            <h3 class="text-2xl font-semibold mb-8">What is your cat's texture preference?</h3>
+            <h3 class="text-xl sm:text-2xl font-semibold mb-6 sm:mb-8">What is your cat's texture preference?</h3>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-10 sm:mb-12">
                 <button
-                    class="matcher-card border-2 border-transparent hover:border-earthy bg-gray-50 dark:bg-[#2A2A2A] p-6 rounded-2xl transition-all flex flex-col items-center gap-4 group">
-                    <i class="bi bi-box text-3xl text-gray-400 group-hover:text-earthy transition-colors"></i>
-                    <span class="font-medium">Crunchy Cubes</span>
+                    class="matcher-card border-2 border-transparent hover:border-earthy bg-gray-50 dark:bg-[#2A2A2A] p-4 sm:p-6 rounded-2xl transition-all flex flex-col items-center justify-center gap-2 sm:gap-4 group">
+                    <i
+                        class="bi bi-box text-2xl sm:text-3xl text-gray-400 group-hover:text-earthy transition-colors"></i>
+                    <span class="font-medium text-sm sm:text-base text-center">Cubes</span>
                 </button>
                 <button
-                    class="matcher-card border-2 border-transparent hover:border-earthy bg-gray-50 dark:bg-[#2A2A2A] p-6 rounded-2xl transition-all flex flex-col items-center gap-4 group">
-                    <i class="bi bi-circle text-3xl text-gray-400 group-hover:text-earthy transition-colors"></i>
-                    <span class="font-medium">Soft Bites</span>
+                    class="matcher-card border-2 border-transparent hover:border-earthy bg-gray-50 dark:bg-[#2A2A2A] p-4 sm:p-6 rounded-2xl transition-all flex flex-col items-center justify-center gap-2 sm:gap-4 group">
+                    <i
+                        class="bi bi-circle text-2xl sm:text-3xl text-gray-400 group-hover:text-earthy transition-colors"></i>
+                    <span class="font-medium text-sm sm:text-base text-center">Soft Bites</span>
                 </button>
                 <button
-                    class="matcher-card border-2 border-transparent hover:border-earthy bg-gray-50 dark:bg-[#2A2A2A] p-6 rounded-2xl transition-all flex flex-col items-center gap-4 group">
-                    <i class="bi bi-layers text-3xl text-gray-400 group-hover:text-earthy transition-colors"></i>
-                    <span class="font-medium">Flaky Shreds</span>
+                    class="matcher-card border-2 border-transparent hover:border-earthy bg-gray-50 dark:bg-[#2A2A2A] p-4 sm:p-6 rounded-2xl transition-all flex flex-col items-center justify-center gap-2 sm:gap-4 group">
+                    <i
+                        class="bi bi-layers text-2xl sm:text-3xl text-gray-400 group-hover:text-earthy transition-colors"></i>
+                    <span class="font-medium text-sm sm:text-base text-center">Flaky Shreds</span>
                 </button>
                 <button
-                    class="matcher-card border-2 border-transparent hover:border-earthy bg-gray-50 dark:bg-[#2A2A2A] p-6 rounded-2xl transition-all flex flex-col items-center gap-4 group">
-                    <i class="bi bi-question-lg text-3xl text-gray-400 group-hover:text-earthy transition-colors"></i>
-                    <span class="font-medium">Not Sure</span>
+                    class="matcher-card border-2 border-transparent hover:border-earthy bg-gray-50 dark:bg-[#2A2A2A] p-4 sm:p-6 rounded-2xl transition-all flex flex-col items-center justify-center gap-2 sm:gap-4 group">
+                    <i
+                        class="bi bi-question-lg text-2xl sm:text-3xl text-gray-400 group-hover:text-earthy transition-colors"></i>
+                    <span class="font-medium text-sm sm:text-base text-center">Not Sure</span>
                 </button>
             </div>
 

@@ -187,6 +187,36 @@ document.addEventListener('DOMContentLoaded', () => {
     closeAuthBtn.addEventListener('click', closeAuth);
     authOverlay.addEventListener('click', closeAuth);
 
+    // Auth Mode Toggle
+    const toggleAuthModeBtn = document.getElementById('toggleAuthModeBtn');
+    const authTitle = document.getElementById('authTitle');
+    const authSubtitle = document.getElementById('authSubtitle');
+    const nameField = document.getElementById('nameField');
+    const authSubmitBtn = document.getElementById('authSubmitBtn');
+    const authToggleText = document.getElementById('authToggleText');
+    let isLoginMode = true;
+
+    toggleAuthModeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        isLoginMode = !isLoginMode;
+        
+        if (isLoginMode) {
+            authTitle.textContent = 'Welcome Back';
+            authSubtitle.textContent = 'Sign in to manage your raw treat subscriptions.';
+            nameField.classList.add('hidden');
+            authSubmitBtn.textContent = 'Sign In';
+            authToggleText.textContent = "Don't have an account?";
+            toggleAuthModeBtn.textContent = 'Sign up';
+        } else {
+            authTitle.textContent = 'Create Account';
+            authSubtitle.textContent = 'Join us to get the best raw nutrition for your cat.';
+            nameField.classList.remove('hidden');
+            authSubmitBtn.textContent = 'Sign Up';
+            authToggleText.textContent = "Already have an account?";
+            toggleAuthModeBtn.textContent = 'Sign in';
+        }
+    });
+
     // --- FAQ Accordion ---
     const faqItems = document.querySelectorAll('.faq-item');
     
